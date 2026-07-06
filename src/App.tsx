@@ -5,7 +5,7 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { theme } from "@/styles/theme";
-import { FirstPage } from "./pages/FirstPage";
+import { BankAccountView } from "./pages/BankAccountView";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +22,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <FirstPage />
+            <BankAccountView />
       </ThemeProvider>
     </QueryClientProvider>
   );
