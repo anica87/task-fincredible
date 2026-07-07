@@ -44,7 +44,7 @@ export function ReloadButton({ status, onReload }: ReloadButtonProps): React.Rea
 //     onError(error, newTodo context) {
 //       // Rollback on failure
 //       queryClient.setQueryData(['todos'], context?.previousTodos)
-      
+
 //     },
 //     onSettled() {
 //       //sync with server

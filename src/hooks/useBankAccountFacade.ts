@@ -1,5 +1,5 @@
 // import { useCallback, useState } from "react";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 
 import { mapBankData } from "@/api/bankMappers";
 import { computeResults } from "@/api/bankResultsService";
@@ -7,9 +7,9 @@ import type { BankAccountViewState } from "@/types/domain.types";
 import { fetchBankAccountData } from "../api/finCredibleBankClient";
 
 /** Query key for the single bank-account-data fetch flow (token -> bank-data). */
-const BANK_ACCOUNT_QUERY_KEY = ['bankAccountData'] as const;
+const BANK_ACCOUNT_QUERY_KEY = ["bankAccountData"] as const;
 
-type FacadeData = Omit<BankAccountViewState, 'status' | 'error'>;
+type FacadeData = Omit<BankAccountViewState, "status" | "error">;
 
 const EMPTY_DATA: FacadeData = {
   personalDetails: null,
@@ -66,7 +66,7 @@ export function useBankAccountFacade() {
     queryKey: BANK_ACCOUNT_QUERY_KEY,
     queryFn: fetchBankAccountData,
     enabled: false, // no fetch on mount, reload btn
-    //React Query caches the selected value, so this only re-runs when the raw query data actually changes 
+    //React Query caches the selected value, so this only re-runs when the raw query data actually changes
     select: (raw): FacadeData => {
       const { personalDetails, accounts, transactions } = mapBankData(raw);
       const results = computeResults(personalDetails, accounts, transactions);
@@ -74,18 +74,18 @@ export function useBankAccountFacade() {
     },
   });
 
-  const status: BankAccountViewState['status'] = query.isFetching
-    ? 'loading'
+  const status: BankAccountViewState["status"] = query.isFetching
+    ? "loading"
     : query.isError
-      ? 'error'
+      ? "error"
       : query.isSuccess
-        ? 'success'
-        : 'idle';
+        ? "success"
+        : "idle";
 
   const error = query.isError
     ? query.error instanceof Error
       ? query.error.message
-      : 'Failed to load bank account data.'
+      : "Failed to load bank account data."
     : null;
 
   return {
