@@ -22,7 +22,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-            <BankAccountView />
+        <BankAccountView />
       </ThemeProvider>
     </QueryClientProvider>
   );

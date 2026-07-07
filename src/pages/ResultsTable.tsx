@@ -1,16 +1,16 @@
-import { DataTable, DataTableColumn } from '@/components/DataTable';
-import { getResultColor, ResultItem } from '@/types/domain.types';
-import React, { useMemo } from 'react';
-
+import type React from "react";
+import { useMemo } from "react";
+import { DataTable, type DataTableColumn } from "@/components/DataTable";
+import { getResultColor, type ResultItem } from "@/types/domain.types";
 
 export interface ResultsTableProps {
   results: ResultItem[];
 }
 
 const RESULT_COLOR_CLASS_NAME: Record<ReturnType<typeof getResultColor>, string> = {
-  green: 'results-table__cell--green',
-  yellow: 'results-table__cell--yellow',
-  red: 'results-table__cell--red',
+  green: "results-table__cell--green",
+  yellow: "results-table__cell--yellow",
+  red: "results-table__cell--red",
 };
 
 /**
@@ -20,10 +20,10 @@ const RESULT_COLOR_CLASS_NAME: Record<ReturnType<typeof getResultColor>, string>
 export function ResultsTable({ results }: ResultsTableProps): React.ReactElement {
   const columns = useMemo<DataTableColumn<ResultItem>[]>(
     () => [
-      { key: 'code', header: 'Code', accessor: (item) => item.code },
+      { key: "code", header: "Code", accessor: (item) => item.code },
       {
-        key: 'result',
-        header: 'Result',
+        key: "result",
+        header: "Result",
         accessor: (item) => item.result,
         getCellClassName: (item) => RESULT_COLOR_CLASS_NAME[getResultColor(item)],
       },

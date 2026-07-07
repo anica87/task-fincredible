@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type React from "react";
+import type { ReactNode } from "react";
 
 export interface TabDefinition<TKey extends string> {
   key: TKey;
@@ -28,7 +29,7 @@ export function Tabs<TKey extends string>({
   const activeTabDefinition = tabs.find((tab) => tab.key === activeTab);
 
   return (
-    <div className={['tabs', className].filter(Boolean).join(' ')}>
+    <div className={["tabs", className].filter(Boolean).join(" ")}>
       <div className="tabs__list" role="tablist">
         {tabs.map((tab) => {
           const isActive = tab.key === activeTab;
@@ -41,7 +42,7 @@ export function Tabs<TKey extends string>({
               aria-selected={isActive}
               aria-controls={`tabpanel-${tab.key}`}
               disabled={tab.disabled}
-              className={['tabs__tab', isActive ? 'tabs__tab--active' : ''].join(' ')}
+              className={["tabs__tab", isActive ? "tabs__tab--active" : ""].join(" ")}
               onClick={() => !tab.disabled && onChange(tab.key)}
             >
               {tab.label}

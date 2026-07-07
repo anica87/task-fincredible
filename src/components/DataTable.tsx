@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type React from "react";
+import type { ReactNode } from "react";
 
 /**
  * Column definition for DataTable<T>.
@@ -11,7 +12,7 @@ export interface DataTableColumn<T> {
   key: string;
   header: ReactNode;
   accessor: (row: T, rowIndex: number) => ReactNode;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
   width?: string;
   getCellClassName?: (row: T, rowIndex: number) => string | undefined;
   getHeaderClassName?: () => string | undefined;
@@ -26,7 +27,7 @@ export interface DataTableProps<T> {
   emptyMessage?: ReactNode;
   getRowClassName?: (row: T, rowIndex: number) => string | undefined;
   className?: string;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 /**
@@ -39,13 +40,13 @@ export function DataTable<T>({
   rows,
   rowKey,
   caption,
-  emptyMessage = 'No data available.',
+  emptyMessage = "No data available.",
   getRowClassName,
   className,
-  'aria-label': ariaLabel,
+  "aria-label": ariaLabel,
 }: DataTableProps<T>): React.ReactElement {
   return (
-    <div className={['data-table-wrapper', className].filter(Boolean).join(' ')}>
+    <div className={["data-table-wrapper", className].filter(Boolean).join(" ")}>
       <table className="data-table" aria-label={ariaLabel ?? caption}>
         {caption ? <caption className="data-table__caption">{caption}</caption> : null}
         <thead>
@@ -54,7 +55,7 @@ export function DataTable<T>({
               <th
                 key={column.key}
                 scope="col"
-                style={{ width: column.width, textAlign: column.align ?? 'left' }}
+                style={{ width: column.width, textAlign: column.align ?? "left" }}
                 className={column.getHeaderClassName?.()}
               >
                 {column.header}
@@ -75,7 +76,7 @@ export function DataTable<T>({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    style={{ textAlign: column.align ?? 'left' }}
+                    style={{ textAlign: column.align ?? "left" }}
                     className={column.getCellClassName?.(row, rowIndex)}
                   >
                     {column.accessor(row, rowIndex)}

@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
-import { fetchBankAccountData } from '../api/finCredibleBankClient';
-
-import { BankAccountViewState } from '@/types/domain.types';
-import { computeResults } from '@/api/bankResultsService';
-import { mapBankData } from '@/api/bankMappers';
+import { useCallback, useState } from "react";
+import { mapBankData } from "@/api/bankMappers";
+import { computeResults } from "@/api/bankResultsService";
+import type { BankAccountViewState } from "@/types/domain.types";
+import { fetchBankAccountData } from "../api/finCredibleBankClient";
 
 const INITIAL_STATE: BankAccountViewState = {
-  status: 'idle',
+  status: "idle",
   personalDetails: null,
   accounts: [],
   transactions: [],
@@ -28,7 +27,7 @@ export function useBankAccountFacade() {
   const [state, setState] = useState<BankAccountViewState>(INITIAL_STATE);
 
   const reload = useCallback(async () => {
-    setState((prev) => ({ ...prev, status: 'loading', error: null }));
+    setState((prev) => ({ ...prev, status: "loading", error: null }));
 
     try {
       const raw = await fetchBankAccountData();
@@ -36,7 +35,7 @@ export function useBankAccountFacade() {
       const results = computeResults(personalDetails, accounts, transactions);
 
       setState({
-        status: 'success',
+        status: "success",
         personalDetails,
         accounts,
         transactions,
@@ -45,12 +44,12 @@ export function useBankAccountFacade() {
       });
     } catch (err) {
       setState({
-        status: 'error',
+        status: "error",
         personalDetails: null,
         accounts: [],
         transactions: [],
         results: [],
-        error: err instanceof Error ? err.message : 'Failed to load bank account data.',
+        error: err instanceof Error ? err.message : "Failed to load bank account data.",
       });
     }
   }, []);

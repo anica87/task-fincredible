@@ -11,7 +11,7 @@
 
 /** GET /token response */
 export interface TokenResponseDto {
-session: string;
+  session: string;
 }
 
 /**
@@ -22,7 +22,7 @@ session: string;
  */
 export interface RawTransactionDto {
   Date: string; // "YYYY-MM-DD"
-  Type: 'debit' | 'deposit' | string;
+  Type: "debit" | "deposit" | string;
   Description: string;
   Amount: number; // signed: negative = money out, positive = money in
 }

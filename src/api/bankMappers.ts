@@ -1,18 +1,18 @@
-import type { BankDataResponseDto, RawAccountDto } from '../types/api.types';
-import type { BankAccountSummary, PersonalDetails, Transaction } from '../types/domain.types';
+import type { BankDataResponseDto, RawAccountDto } from "../types/api.types";
+import type { BankAccountSummary, PersonalDetails, Transaction } from "../types/domain.types";
 
 const KNOWN_ROOT_KEYS = [
-  'Name',
-  'LastName',
-  'DOB',
-  'IBAN',
-  'Country',
-  'City',
-  'Address',
-  'PostalCode',
-  'EmploymentStatus',
-  'Employer',
-  'Accounts',
+  "Name",
+  "LastName",
+  "DOB",
+  "IBAN",
+  "Country",
+  "City",
+  "Address",
+  "PostalCode",
+  "EmploymentStatus",
+  "Employer",
+  "Accounts",
 ];
 
 /** "1980.10.29" -> "1980-10-29". Falls back to the raw string if it doesn't match. */
@@ -77,7 +77,7 @@ export function mapTransactions(rawAccounts: RawAccountDto[]): Transaction[] {
       description: transaction.Description,
       amount: transaction.Amount,
       currency: account.AccountCurrency,
-      type: transaction.Amount < 0 ? 'DEBIT' : ('CREDIT' as const),
+      type: transaction.Amount < 0 ? "DEBIT" : ("CREDIT" as const),
       accountSession: account.Session,
     })),
   );

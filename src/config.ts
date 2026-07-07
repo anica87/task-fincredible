@@ -8,14 +8,10 @@
  */
 export const FIN_CREDIBLE_BANK_CONFIG = {
   apiKey: import.meta.env.VITE_POSTMAN_API_KEY,
-  tokenEndpoint:
-    'https://a0ba5803-e873-42b3-b311-665d53ea3479.mock.pstmn.io/token',
-  bankDataEndpoint:
-    'https://a0ba5803-e873-42b3-b311-665d53ea3479.mock.pstmn.io/bank-data',
+  tokenEndpoint: "https://a0ba5803-e873-42b3-b311-665d53ea3479.mock.pstmn.io/token",
+  bankDataEndpoint: "https://a0ba5803-e873-42b3-b311-665d53ea3479.mock.pstmn.io/bank-data",
   /** Header used to authenticate every request against the API. */
-  apiKeyHeaderName: 'x-api-key',
+  apiKeyHeaderName: "x-api-key",
   /** Query param name the session token is passed as to the bank-data endpoint. */
-  tokenQueryParam: 'token',
+  tokenQueryParam: "token",
 } as const;
-
-

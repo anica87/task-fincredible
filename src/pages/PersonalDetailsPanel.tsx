@@ -1,7 +1,7 @@
-import { BankAccountSummary, PersonalDetails } from '@/types/domain.types';
-import React, { useMemo } from 'react';
-import { KeyValueItem, KeyValueList, recordToKeyValueItems } from './KeyValueList';
-
+import type React from "react";
+import { useMemo } from "react";
+import type { BankAccountSummary, PersonalDetails } from "@/types/domain.types";
+import { type KeyValueItem, KeyValueList, recordToKeyValueItems } from "./KeyValueList";
 
 export interface PersonalDetailsPanelProps {
   personalDetails: PersonalDetails | null;
@@ -23,17 +23,17 @@ export function PersonalDetailsPanel({
     if (!personalDetails) return [];
 
     const known: KeyValueItem[] = [
-      { label: 'First name', value: personalDetails.firstName },
-      { label: 'Last name', value: personalDetails.lastName },
-      { label: 'Date of birth', value: personalDetails.dateOfBirth },
-      { label: 'IBAN', value: personalDetails.iban },
-      { label: 'Country', value: personalDetails.country },
-      { label: 'City', value: personalDetails.city },
-      { label: 'Address', value: personalDetails.address },
-      { label: 'Postal code', value: personalDetails.postalCode },
-      { label: 'Employment status', value: personalDetails.employmentStatus },
-      { label: 'Employer', value: personalDetails.employer },
-    ].filter((item) => item.value !== undefined && item.value !== '');
+      { label: "First name", value: personalDetails.firstName },
+      { label: "Last name", value: personalDetails.lastName },
+      { label: "Date of birth", value: personalDetails.dateOfBirth },
+      { label: "IBAN", value: personalDetails.iban },
+      { label: "Country", value: personalDetails.country },
+      { label: "City", value: personalDetails.city },
+      { label: "Address", value: personalDetails.address },
+      { label: "Postal code", value: personalDetails.postalCode },
+      { label: "Employment status", value: personalDetails.employmentStatus },
+      { label: "Employer", value: personalDetails.employer },
+    ].filter((item) => item.value !== undefined && item.value !== "");
 
     return [...known, ...recordToKeyValueItems(personalDetails.extra)];
   }, [personalDetails]);
@@ -55,14 +55,14 @@ export function PersonalDetailsPanel({
               aria-label={`Account ${account.session}`}
               className="personal-details-panel__account"
               items={[
-                { label: 'Session', value: account.session },
-                { label: 'Currency', value: account.currency },
+                { label: "Session", value: account.session },
+                { label: "Currency", value: account.currency },
                 {
-                  label: 'Current balance',
+                  label: "Current balance",
                   value: `${account.currentBalance.toFixed(2)} ${account.currency}`,
                 },
                 {
-                  label: 'Previous month balance',
+                  label: "Previous month balance",
                   value: `${account.previousMonthBalance.toFixed(2)} ${account.currency}`,
                 },
               ]}

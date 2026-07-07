@@ -1,8 +1,9 @@
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
+import type React from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonVariant = "primary" | "secondary" | "ghost";
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   children: ReactNode;
   variant?: ButtonVariant;
   isLoading?: boolean;
@@ -12,7 +13,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
 /** Small generic button — not bank-specific, reusable across the app. */
 export function Button({
   children,
-  variant = 'primary',
+  variant = "primary",
   isLoading = false,
   loadingText,
   disabled,
@@ -22,12 +23,12 @@ export function Button({
   return (
     <button
       type="button"
-      className={['btn', `btn--${variant}`, className].filter(Boolean).join(' ')}
+      className={["btn", `btn--${variant}`, className].filter(Boolean).join(" ")}
       disabled={disabled || isLoading}
       aria-busy={isLoading}
       {...rest}
     >
-      {isLoading ? loadingText ?? 'Loading…' : children}
+      {isLoading ? (loadingText ?? "Loading…") : children}
       {/* nullish coalescing operator,
       ako je loadingText null ili undefined, koristi 'Loading…'
       || vraća desnu vrednost ako je leva falsy (false, 0, '', null, undefined, NaN).

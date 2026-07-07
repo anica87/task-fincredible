@@ -1,10 +1,10 @@
 import {
-  BankAccountSummary,
-  PersonalDetails,
+  type BankAccountSummary,
+  type PersonalDetails,
   ResultCode,
-  ResultItem,
-  Transaction,
-} from '../types/domain.types';
+  type ResultItem,
+  type Transaction,
+} from "../types/domain.types";
 
 /**
  * Derives the 4 Result rows defined in the task's "Result Definition" section.
@@ -12,18 +12,18 @@ import {
  * ("Online Poker", "Child allowance") — extend them if new traces show up.
  */
 
-const GAMBLING_KEYWORDS = ['bet', 'casino', 'gambl', 'poker', 'lottery', 'slots', 'wager'];
+const GAMBLING_KEYWORDS = ["bet", "casino", "gambl", "poker", "lottery", "slots", "wager"];
 const CHILD_SUPPORT_KEYWORDS = [
-  'child allowance',
-  'child support',
-  'child benefit',
-  'family allowance',
-  'gov.',
-  'government',
-  'social security',
-  'welfare',
+  "child allowance",
+  "child support",
+  "child benefit",
+  "family allowance",
+  "gov.",
+  "government",
+  "social security",
+  "welfare",
 ];
-const SALARY_KEYWORDS = ['salary', 'payroll'];
+const SALARY_KEYWORDS = ["salary", "payroll"];
 
 function descriptionMatches(transaction: Transaction, keywords: string[]): boolean {
   const haystack = transaction.description.toLowerCase();
@@ -32,11 +32,11 @@ function descriptionMatches(transaction: Transaction, keywords: string[]): boole
 
 /** IBAN_CHECK: verified if the IBAN's country prefix matches the user's country. */
 function checkIban(personalDetails: PersonalDetails): ResultItem {
-  const ibanCountry = (personalDetails.iban ?? '').slice(0, 2).toUpperCase();
-  const userCountry = (personalDetails.country ?? '').slice(0, 2).toUpperCase();
+  const ibanCountry = (personalDetails.iban ?? "").slice(0, 2).toUpperCase();
+  const userCountry = (personalDetails.country ?? "").slice(0, 2).toUpperCase();
   const verified = Boolean(ibanCountry) && ibanCountry === userCountry;
 
-  return { code: ResultCode.IBAN_CHECK, result: verified ? 'verified' : 'unverified' };
+  return { code: ResultCode.IBAN_CHECK, result: verified ? "verified" : "unverified" };
 }
 
 /** Extracts "YYYY-MM" from an ISO-ish date string, for month-level grouping. */
@@ -51,7 +51,7 @@ function toYearMonth(date: string): string {
  */
 function hasRecurringSalary(transactions: Transaction[]): boolean {
   const salaryCredits = transactions.filter(
-    (t) => t.type === 'CREDIT' && descriptionMatches(t, SALARY_KEYWORDS),
+    (t) => t.type === "CREDIT" && descriptionMatches(t, SALARY_KEYWORDS),
   );
   const distinctMonths = new Set(salaryCredits.map((t) => toYearMonth(t.date)));
   return distinctMonths.size >= 2;
@@ -72,25 +72,25 @@ function hasRecurringSalary(transactions: Transaction[]): boolean {
 function checkDebtRisk(accounts: BankAccountSummary[], transactions: Transaction[]): ResultItem {
   const hasNegativeBalance = accounts.some((account) => account.currentBalance < 0);
   if (hasNegativeBalance) {
-    return { code: ResultCode.DEBT_RISK, result: 'HIGH' };
+    return { code: ResultCode.DEBT_RISK, result: "HIGH" };
   }
 
   return {
     code: ResultCode.DEBT_RISK,
-    result: hasRecurringSalary(transactions) ? 'LOW' : 'HIGH',
+    result: hasRecurringSalary(transactions) ? "LOW" : "HIGH",
   };
 }
 
 /** GAMBLING: verified if any transaction shows traces of gambling activity. */
 function checkGambling(transactions: Transaction[]): ResultItem {
   const verified = transactions.some((t) => descriptionMatches(t, GAMBLING_KEYWORDS));
-  return { code: ResultCode.GAMBLING, result: verified ? 'verified' : 'unverified' };
+  return { code: ResultCode.GAMBLING, result: verified ? "verified" : "unverified" };
 }
 
 /** CHILD_SUPPORT: verified if any transaction shows traces of government/child support. */
 function checkChildSupport(transactions: Transaction[]): ResultItem {
   const verified = transactions.some((t) => descriptionMatches(t, CHILD_SUPPORT_KEYWORDS));
-  return { code: ResultCode.CHILD_SUPPORT, result: verified ? 'verified' : 'unverified' };
+  return { code: ResultCode.CHILD_SUPPORT, result: verified ? "verified" : "unverified" };
 }
 
 export function computeResults(
