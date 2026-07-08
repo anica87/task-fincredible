@@ -32,7 +32,6 @@ export async function fetchSessionToken(): Promise<string> {
   // fetchBankData() rejects it as "missing", and the flow stops after this
   // single request with a misleading error. If this fires, check the real
   // field name in `data` and update TokenResponseDto in api.types.ts.
-  console.log(data);
 
   if (typeof data?.session !== "string" || data.session.length === 0) {
     throw new Error(
